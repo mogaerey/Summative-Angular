@@ -1,0 +1,42 @@
+<div class="row" *ngIf="displayList">
+    <div class="col-md-6">
+        <ul *ngIf="displayList" class="list-group">
+            <li *ngFor="let m of movies; let i = index" class="list-group-item"
+                [class.selected]="onViewMovieDetails===m" (click)="onViewMovieDetails=m">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p *ngIf="!movieIdsBeingEdited[i]">{{ m.title }}</p>
+                        <input *ngIf="movieIdsBeingEdited[i]" [(ngModel)]="m.title">
+                        <input *ngIf="movieIdsBeingEdited[i]" [(ngModel)]="m.description">
+                        <input *ngIf="movieIdsBeingEdited[i]" [(ngModel)]="m.imageUrl">
+                    </div>
+                    <div class="col-md-6">
+                        <button *ngIf="movieIdsBeingEdited[i]" (click)="onSaveEditMovie(i)"
+                            class="btn btn-success">Save</button>
+                        <button *ngIf="!movieIdsBeingEdited[i]" class="btn btn-info"
+                            (click)="onViewMovieDetails(m)">View</button>
+                        <button *ngIf="!movieIdsBeingEdited[i]" (click)="onStartEditMovie(i)"
+                            class="btn btn-warning">Edit</button>
+
+                        <button *ngIf="!movieIdsBeingEdited[i]" (click)="onDeleteMovie(i)"
+                            class="btn btn-danger">X</button>
+
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6" *ngIf="movieBeingDisplayed">
+        <div class="card">
+            <div [(ngModel)]="movieBeingDisplayed.detailText">
+
+                <img src={{movieBeingDisplayed.imageUrl}} class="card-img-top" alt=" " height="100" width="100" />
+                <div class="card-body">
+                    <h5 class="card-title">{{movieBeingDisplayed.title}}</h5>
+                    <p class="card-text">{{movieBeingDisplayed.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
