@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <ul *ngIf="displayList" class="list-group">
             <li *ngFor="let m of movies; let i = index" class="list-group-item"
-                [class.selected]="onViewMovieDetails===m" (click)="onViewMovieDetails=m">
+               (click)="onViewMovieDetails(m)" [class.selected]="movieBeingDisplayed === m"> 
                 <div class="row">
                     <div class="col-md-6">
                         <p *ngIf="!movieIdsBeingEdited[i]">{{ m.title }}</p>
@@ -10,16 +10,12 @@
                         <input *ngIf="movieIdsBeingEdited[i]" [(ngModel)]="m.description">
                         <input *ngIf="movieIdsBeingEdited[i]" [(ngModel)]="m.imageUrl">
                     </div>
-                    <div class="col-md-6">
-                        <button *ngIf="movieIdsBeingEdited[i]" (click)="onSaveEditMovie(i)"
-                            class="btn btn-success">Save</button>
-                        <button *ngIf="!movieIdsBeingEdited[i]" class="btn btn-info"
-                            (click)="onViewMovieDetails(m)">View</button>
-                        <button *ngIf="!movieIdsBeingEdited[i]" (click)="onStartEditMovie(i)"
-                            class="btn btn-warning">Edit</button>
-
-                        <button *ngIf="!movieIdsBeingEdited[i]" (click)="onDeleteMovie(i)"
-                            class="btn btn-danger">X</button>
+                    <div class="col-md-6" id="movBtn">
+                        
+                        <button *ngIf="!movieIdsBeingEdited[i]" class="btn btn-info" (click)="onViewMovieDetails(m)">View</button>
+                        <button *ngIf="!movieIdsBeingEdited[i]" (click)="onStartEditMovie(i)" class="btn btn-warning">Edit</button>
+                        <button *ngIf="!movieIdsBeingEdited[i]" (click)="onDeleteMovie(i)" class="btn btn-danger">X</button>
+                        <button *ngIf="movieIdsBeingEdited[i]" (click)="onSaveEditMovie(i)" class="btn btn-success">Save</button>
 
 
                     </div>
@@ -29,7 +25,7 @@
     </div>
     <div class="col-md-6" *ngIf="movieBeingDisplayed">
         <div class="card">
-            <div [(ngModel)]="movieBeingDisplayed.detailText">
+            <div [(ngModel)]="movieBeingDisplayed.title" ngDefaultControl>
 
                 <img src={{movieBeingDisplayed.imageUrl}} class="card-img-top" alt=" " height="100" width="100" />
                 <div class="card-body">

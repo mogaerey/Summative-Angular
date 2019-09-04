@@ -15,7 +15,6 @@ export class ListComponent implements OnInit {
   movieIdsBeingEdited = {};
   movieBeingDisplayed: Movie;
 
-
   constructor(private movieService: MovieService) { }
 
   ngOnInit() {
